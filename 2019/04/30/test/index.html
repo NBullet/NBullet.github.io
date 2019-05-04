@@ -84,10 +84,6 @@
 			<a href="/about" class="menu-item-about">关于</a>
 		</li>
 	
-		<li class="menu-gallery">
-			<a href="/gallery" class="menu-item-gallery">相册</a>
-		</li>
-	
 
 	
 		<li class="menu-search">
@@ -199,10 +195,6 @@
 	
 		<li class="menu-about">
 			<a href="/about" class="menu-item-about">关于</a>
-		</li>
-	
-		<li class="menu-gallery">
-			<a href="/gallery" class="menu-item-gallery">相册</a>
 		</li>
 	
 
@@ -393,6 +385,30 @@
 			
 					<li>
 						<div class="relate-post-text">
+							<a class="relate-post-title" href="/2019/04/30/test3/" title="test3">
+								test3			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								四月 30日, 2019				
+							</p>
+							<p class="relate-post-content">
+								空标签测试
+
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/2019/04/30/test3/" title="test3">				
+								
+								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="test3">
+							</a>
+						</div>
+					</li>											
+			
+			
+					<li>
+						<div class="relate-post-text">
 							<a class="relate-post-title" href="/2019/04/30/test2/" title="test2">
 								test2			
 							</a>
@@ -498,7 +514,82 @@
 
 
 
-	
+	 
+	<script src="/plugin/clipboard/clipboard.js"></script>
+	<script>
+		// Copy code !
+	    function codePreprocessing() {
+	        $("#article-content .highlight").each(function() {
+
+	            $(this).wrap('<div id="post-code"></div>');
+
+	        })
+
+	        $("#article-content #post-code").each(function() {
+
+	            $(this).prepend('<nav class="copy-nav"><span><i class="code-language"></i></span></nav>');
+
+	        })
+
+	        $("#article-content .copy-nav").each(function() {
+	            var temp = $(this).next().attr('class'),
+	                language = ((temp.length > 9) && (temp != null)) ? temp.substr(10) : "none"; //why 9? Need to check language?
+
+	            $(this).find('.code-language').text(language);
+
+	            $(this).append('<span class="copy-btn"><i class="fa fa-copy" aria-hidden="true"></i></span>');
+
+	        });
+	    }
+
+		function codeCopy() {
+		    $('#article-content #post-code').each(function(i) {
+		        var codeCopyId = 'codeCopy-' + i;
+
+		        var codeNode = $(this).find('.code'),
+		            copyButton = $(this).find('.copy-btn');
+
+		        codeNode.attr('id', codeCopyId);
+		        copyButton.attr('data-clipboard-target-id', codeCopyId);
+		    })
+
+		    
+			var clipboard = new ClipboardJS('.copy-btn', {
+					target: function(trigger) {
+						return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+					}
+		      	});
+
+			//pure js
+			function showTooltip(elem, msg) {		   
+				elem.setAttribute('aria-label', msg);
+				elem.setAttribute('class', 'copy-btn copy-status');
+				setTimeout(function() {
+					elem.setAttribute('class', 'copy-btn');
+				}, 2000);
+			}
+
+			clipboard.on('success', function(e) {
+			    e.clearSelection();
+			    console.info('Action:', e.action);		   
+			    console.info('Trigger:', e.trigger);
+			    showTooltip(e.trigger, 'Copied!');
+			    
+			});
+			clipboard.on('error', function(e) {
+			    console.error('Action:', e.action);
+			    console.error('Trigger:', e.trigger);
+			});
+		
+
+		}
+
+		if ($('.layout-post').length) {
+		    codePreprocessing();
+		    codeCopy();
+		} 
+	</script>
+
 
 
 
@@ -595,7 +686,7 @@
 	<div class="copyright">
 		<p>
 			 
-				&copy;2017 - 2019, content by nbullet. All Rights Reserved.
+				&copy;2019, content by nbullet. All Rights Reserved.
 			
 			
 			
@@ -703,8 +794,6 @@
 
 
 <!-- love effect -->
-
-	<script src="/plugin/love/love.js"></script>
 
 
 <!-- back to top -->
