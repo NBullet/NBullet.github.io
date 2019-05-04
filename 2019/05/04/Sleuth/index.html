@@ -13,7 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <title>
     
-      test3 | nbullet_blog
+      Spring Cloud Sleuth | nbullet_blog
     
   </title>
   <meta name="author" content="nbullet">
@@ -160,7 +160,7 @@
 	<!-- Page title -->
 	<p>
 		
-			当前文章&nbsp;:&nbsp;《test3》
+			当前文章&nbsp;:&nbsp;《Spring Cloud Sleuth》
 		
 	</p>
 
@@ -258,6 +258,18 @@
 		插件作者：KELEN
 		插件来源: https://github.com/KELEN/katelog
 -->
+
+	
+		<div class="layout-toc">
+			<div id="layout-toc">
+				<div class="k-catelog-list" id="catelog-list" data-title="文章目录"></div>
+			</div>
+		</div>
+
+		
+		<script src="/plugin/toc/katelog.min.js"></script>
+
+		
 	 
 
 <div class="layout-post">
@@ -265,8 +277,8 @@
 	<div class="article-title">
 		<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
 		
-	<a href="/2019/04/30/test3/" itemprop="url">
-		test3
+	<a href="/2019/05/04/Sleuth/" itemprop="url">
+		Spring Cloud Sleuth
 	</a>
 
 	</div>
@@ -279,9 +291,9 @@
 
 	发布于
 
-	<a href="/2019/04/30/test3/" itemprop="url">
-		<time datetime="2019-04-30T12:24:00.000Z" itemprop="datePublished">
-	  		2019-04-30
+	<a href="/2019/05/04/Sleuth/" itemprop="url">
+		<time datetime="2019-05-04T15:41:09.000Z" itemprop="datePublished">
+	  		2019-05-04
 	  </time>
 	</a>
 	&nbsp;
@@ -297,9 +309,9 @@
 
 	更新于
 
-	<a href="/2019/04/30/test3/" itemprop="url">
-		<time datetime="2019-04-30T12:24:00.000Z" itemprop="dateUpdated">
-	  		2019-04-30
+	<a href="/2019/05/04/Sleuth/" itemprop="url">
+		<time datetime="2019-05-04T15:41:09.000Z" itemprop="dateUpdated">
+	  		2019-05-04
 	  </time>
 	</a> 
 
@@ -308,13 +320,23 @@
 		</span>
 		<span>
 			<i class="fa fa-tags"></i>
-					
+			
+	
+		<a href="/tags/Spring-Cloud/" class=" ">
+			Spring Cloud
+		</a>
+	
+		<a href="/tags/Sleuth/" class=" ">
+			Sleuth
+		</a>
+	
+		
 		</span>
 		
 		
 
 	
-    <span class="leancloud_visitors" id="/2019/04/30/test3/_visitors" data-url="/2019/04/30/test3/" data-title="test3">
+    <span class="leancloud_visitors" id="/2019/05/04/Sleuth/_visitors" data-url="/2019/05/04/Sleuth/" data-title="Spring Cloud Sleuth">
        	<i class="fa fa-eye"></i>
        	热度
         <i class="leancloud_visitors_count" id="leancloud_visitors_count">0</i>
@@ -324,7 +346,7 @@
 
 
 	
-    <span class="leancloud_likes" id="/2019/04/30/test3/_likes" data-url="/2019/04/30/test3/" data-title="test3" rel="unlike">
+    <span class="leancloud_likes" id="/2019/05/04/Sleuth/_likes" data-url="/2019/05/04/Sleuth/" data-title="Spring Cloud Sleuth" rel="unlike">
         <i class="fa fa-heart"></i>
         喜欢
         <i class="leancloud_likes_count" id="leancloud_likes_count">0</i>
@@ -333,11 +355,41 @@
 	</div>
 
 	<div class="article-content" id="article-content">
-		<p>空标签测试</p>
+		<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><blockquote>
+<p>Spring-Cloud-Sleuth是Spring Cloud的组成部分之一，为SpringCloud应用实现了一种分布式追踪解决方案，其兼容了Zipkin, HTrace和log-based追踪。在我们日常的使用中，只需要简单的引入对应的jar包，则可以使用到Sleuth的功能，但如果是多线程的场景下，有一些注意事项是需要我们注意的。</p>
+</blockquote>
+<h2 id="术语-Terminology"><a href="#术语-Terminology" class="headerlink" title="术语(Terminology)"></a>术语(Terminology)</h2><p><em>Span：</em> 基本工作单元，例如，在一个新建的span中发送一个RPC等同于发送一个回应请求给RPC，span通过一个64位ID唯一标识，trace以另一个64位ID表示，span还有其他数据信息，比如摘要、时间戳事件、关键值注释(tags)、span的ID、以及进度ID(通常是IP地址)<br> span在不断的启动和停止，同时记录了时间信息，当你创建了一个span，你必须在未来的某个时刻停止它。<br> <em>Trace：</em> 一系列spans组成的一个树状结构，例如，如果你正在跑一个分布式大数据工程，你可能需要创建一个trace。<br> <em>Annotation：</em> 用来及时记录一个事件的存在，一些核心annotations用来定义一个请求的开始和结束</p>
+<ul>
+<li><em>cs</em>- Client Sent -客户端发起一个请求，这个annotion描述了这个span的开始</li>
+<li><em>sr</em>- Server Received -服务端获得请求并准备开始处理它，如果将其sr减去cs时间戳便可得到网络延迟</li>
+<li><em>ss</em>- Server Sent -注解表明请求处理的完成(当请求返回客户端)，如果ss减去sr时间戳便可得到服务端需要的处理请求时间</li>
+<li><em>cr</em>- Client Received -表明span的结束，客户端成功接收到服务端的回复，如果cr减去cs时间戳便可得到客户端从服务端获取回复的所有所需时间</li>
+</ul>
+<p><img src="/2019/05/04/Sleuth/trace-id.png" alt="img"></p>
+<p>每个颜色的注解表明一个span(总计7个spans，从A到G)，如果在注解中有这样的信息：<br>Trace Id = X<br>Span Id = D<br>Client Sent<br>这就表明当前span将<em>Trace-Id</em>设置为<em>X</em>，将<em>Span-Id</em>设置为<em>D</em>，同时它还表明了<em>ClientSent</em>事件</p>
+<h2 id="简单的使用-log搜集"><a href="#简单的使用-log搜集" class="headerlink" title="简单的使用(log搜集)"></a>简单的使用(log搜集)</h2><p>如果仅需要Spring Cloud Sleuth而不需要Zipkin集成，只需要增加spring-cloud-starter-sleuth模块到你工程中</p>
+<ol>
+<li>为了不手动添加版本号，更好的方式是通过Spring BOM添加dependencymanagement</li>
+<li>添加依赖到spring-cloud-starter-sleuth</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-sleuth&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>运行代码后，即可得到如下的日志</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2016</span>-<span class="number">02</span>-<span class="number">02</span> <span class="number">15</span>:<span class="number">30</span>:<span class="number">57</span><span class="variable">.902</span>  INFO [bar,<span class="number">6</span>bfd228dc00d216b,<span class="number">6</span>bfd228dc00d216b,false] <span class="number">23030</span> --- [nio-<span class="number">8081</span>-exec-<span class="number">3</span>] ...</span><br><span class="line"><span class="number">2016</span>-<span class="number">02</span>-<span class="number">02</span> <span class="number">15</span>:<span class="number">30</span>:<span class="number">58</span><span class="variable">.372</span> ERROR [bar,<span class="number">6</span>bfd228dc00d216b,<span class="number">6</span>bfd228dc00d216b,false] <span class="number">23030</span> --- [nio-<span class="number">8081</span>-exec-<span class="number">3</span>] ...</span><br><span class="line"><span class="number">2016</span>-<span class="number">02</span>-<span class="number">02</span> <span class="number">15</span>:<span class="number">31</span>:<span class="number">01</span><span class="variable">.936</span>  INFO [bar,<span class="number">46</span>ab0d418373cbc9,<span class="number">46</span>ab0d418373cbc9,false] <span class="number">23030</span> --- [nio-<span class="number">8081</span>-exec-<span class="number">4</span>] ...</span><br></pre></td></tr></table></figure>
+<h2 id="线程池中使用"><a href="#线程池中使用" class="headerlink" title="线程池中使用"></a>线程池中使用</h2><p>如果不经过特殊处理，在一些会使用到线程池的情况下，是没办法自动的生成对应的spanId、traceId</p>
+<p>比如使用<em>@Async</em>、<em>@Schedule</em> 等会使用到线程池的注解，或者直接使用<em>CompletableFuture.runAsync</em>方法时，默认都是无法自动生成spanId和traceId的。</p>
+<p><em>Sleuth</em>本身有开关可以打开这些功能spring.sleuth.async.enabled<em>、</em>spring.sleuth.scheduled.enabled<em> ，但当我们有自定义线程的需求时就可以使用sleuth中提供的几个类来给我们的线程池增加配置</em>LazyTraceExecutor<em>、</em>TraceableExecutorService<em>、</em>TraceableScheduledExecutorService*</p>
+<p><em>比如自定义</em>@Async<em>的线程池</em>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Set the ThreadPoolExecutor's core pool size.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> corePoolSize = <span class="number">15</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Set the ThreadPoolExecutor's maximum pool size.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> maxPoolSize = <span class="number">400</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Set the capacity for the ThreadPoolExecutor's BlockingQueue.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> queueCapacity = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> BeanFactory beanFactory;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 观察者的用来做IO的线程池</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @return</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Executor <span class="title">observerIoExecutor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ThreadPoolTaskExecutor threadPoolTaskExecutor = <span class="keyword">new</span> ThreadPoolTaskExecutor();</span><br><span class="line">        threadPoolTaskExecutor.setCorePoolSize(corePoolSize);</span><br><span class="line">        threadPoolTaskExecutor.setMaxPoolSize(maxPoolSize);</span><br><span class="line">        threadPoolTaskExecutor.setQueueCapacity(queueCapacity);</span><br><span class="line">        threadPoolTaskExecutor.setThreadNamePrefix(<span class="string">"ObExecutor-"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果线程数不够，就在当前线程执行</span></span><br><span class="line">        threadPoolTaskExecutor.setRejectedExecutionHandler(<span class="keyword">new</span> ThreadPoolExecutor.CallerRunsPolicy());</span><br><span class="line">        threadPoolTaskExecutor.initialize();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> LazyTraceExecutor(beanFactory, threadPoolTaskExecutor);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过配置，<em>@Async</em>就会使用<em>LazyTraceExecutor</em>中定义的生成spanId和traceId的策略</p>
+<p>但是如果我们只是单个线程使用有怎么办你？比如new Thread.start(); 不用担心，除了上面线程池Sleuth提供相应的配置，Sleuth还提供了TraceCallable、TraceRunnable供我们使用，自定义一个线程的时候，我们就可以直接用TraceRunnable 来替代Runnable</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文只是简单的介绍了Sleuth提供给我们多线程情况下需要使用到的几个类，更多关于Sleuth定制spanName，以及spanId的定制化等高级功能，我们以后在分析</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://springcloud.cn/view/244" target="_blank" rel="noopener">http://springcloud.cn/view/244</a></p>
+<p><a href="https://blog.csdn.net/peterwanghao/article/details/79967634" target="_blank" rel="noopener">https://blog.csdn.net/peterwanghao/article/details/79967634</a></p>
+<p><a href="https://cloud.spring.io/spring-cloud-static/Finchley.SR2/single/spring-cloud.html" target="_blank" rel="noopener">https://cloud.spring.io/spring-cloud-static/Finchley.SR2/single/spring-cloud.html</a></p>
 	
 	</div>
 	
-	<div id="current-post-cover" data-scr="/img/cart_cover.jpg"></div>
+	<div id="current-post-cover" data-scr="/98.jpg"></div>
 
 	<!-- relate post, comment...-->
 	<div class="investment-container">
@@ -352,10 +404,6 @@
 	<span>
 		<a href="javascript: window.scrollTo(0, 0);">返回顶部</a>
 		
-		
-			<a href="/2019/04/30/test2/" title="test2" rel="next">
-				下一篇&raquo;
-			</a>
 			
 	</span>
 
@@ -370,58 +418,7 @@
 
 <div class="relate-post">
 	
-		<ul>
-			
-					<li>
-						<div class="relate-post-text">
-							<a class="relate-post-title" href="/2019/04/30/test2/" title="test2">
-								test2			
-							</a>
-							<p class="relate-post-date">
-								<i class="fa fa-calendar"></i>
-								四月 30日, 2019				
-							</p>
-							<p class="relate-post-content">
-								
-
-							</p>
-						</div>
-
-						<div class="relate-post-cover">
-							<a href="/2019/04/30/test2/" title="test2">				
-								
-								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="test2">
-							</a>
-						</div>
-					</li>											
-			
-			
-					<li>
-						<div class="relate-post-text">
-							<a class="relate-post-title" href="/2019/04/30/test/" title="test">
-								test			
-							</a>
-							<p class="relate-post-date">
-								<i class="fa fa-calendar"></i>
-								四月 30日, 2019				
-							</p>
-							<p class="relate-post-content">
-								
-
-
-							</p>
-						</div>
-
-						<div class="relate-post-cover">
-							<a href="/2019/04/30/test/" title="test">				
-								
-								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="test">
-							</a>
-						</div>
-					</li>											
-			
-			
-		</ul>
+		<div>Please check the post_relate setting in config.yml of hexo-theme-Annie! You should make sure 'postsEnable == true' and the number of site posts greater than 1.</div>	
 	
 </div>	
 			</div>
@@ -683,17 +680,6 @@
 
 	<!-- busuanzi -->
 	<!-- busuanzi -->
-
-		
-	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-	
-
-		<span id="busuanzi_container_page_pv">
-	  		本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-		</span>
-
-	
-
 
 
 
