@@ -24,14 +24,14 @@
 
   <!-- css -->
   <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="/css/Annie.css">
+<link rel="stylesheet" href="css/Annie.css">
   
   <!-- jquery -->
-	<script src="/js/jquery.min.js"></script>
+	<script src="js/jquery.min.js"></script>
 
   <!-- leancloud -->
   <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
-<script src="/js/leancloud.js"></script>
+<script src="js/leancloud.js"></script>
 </head>
 	<body>
 		<!-- Preloader -->
@@ -49,7 +49,7 @@
 
 
 <!-- header -->
-<header class="fixbackground" data-img-mode="normal" data-normal-src="/img/0.jpg" data-random-max="110" data-random-src="/photo/">
+<header class="fixbackground" data-img-mode="random" data-normal-src="/img/0.jpg" data-random-max="111" data-random-src="/photo/">
 	<div class="mask">
 		<!-- Logo and navigation -->
 		<div class="h-header">
@@ -65,7 +65,7 @@
 				<ul>
 	
 		<li class="menu-home">
-			<a href="/" class="menu-item-home">主页</a>
+			<a href="index.html" class="menu-item-home">主页</a>
 		</li>
 	
 		<li class="menu-archive">
@@ -178,7 +178,7 @@
 		<ul>
 	
 		<li class="menu-home">
-			<a href="/" class="menu-item-home">主页</a>
+			<a href="index.html" class="menu-item-home">主页</a>
 		</li>
 	
 		<li class="menu-archive">
@@ -260,21 +260,21 @@
 	<div id="layout-cart">
 		
 		<div class="post" id="post">
-			<a class="post-cover" href="/2019/05/04/Sleuth/" title=" Spring Cloud Sleuth ">
+			<a class="post-cover" href="2019/05/05/Typora/" title=" Typora+Hexo编写博客 ">
 				
-				<img class="lazy" src="/img/placeholder.jpg" data-src="98.jpg">
+				<img class="lazy" src="/img/placeholder.jpg" data-src="/img/0.jpg">
 			</a>
 
 			<div class="post-text">
 				<p class="post-time">
-					五月 4日, 2019
+					五月 5日, 2019
 				</p>	
 				<h3 class="post-title" id="post-title-index">
-					<a href="/2019/05/04/Sleuth/" title="Spring Cloud Sleuth">
+					<a href="2019/05/05/Typora/" title="Typora+Hexo编写博客">
 						<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
 						
-	<a href="/2019/05/04/Sleuth/" itemprop="url">
-		Spring Cloud Sleuth
+	<a href="2019/05/05/Typora/" itemprop="url">
+		Typora+Hexo编写博客
 	</a>
 
 					</a>
@@ -282,28 +282,15 @@
 				<p class="post-content">
 					
 						概述
-Spring-Cloud-Sleuth是Spring Cloud的组成部分之一，为SpringCloud应用实现了一种分布式追踪解决方案，其兼容了Z...
+在使用Hexo搭建GitHub博客的时候，上传图片是个头疼的问题，经过研究，用Typora可以很好的解决这个问题，编写博客也变得非常的方便了
+
+
 					
 				</p>
 				<p class="post-meta">
 					
 
-	
-    <span class="leancloud_visitors" id="/2019/05/04/Sleuth/_visitors" data-url="/2019/05/04/Sleuth/" data-title="Spring Cloud Sleuth">
-       	<i class="fa fa-eye"></i>
-       	热度
-        <i class="leancloud_visitors_count" id="leancloud_visitors_count">0</i>
-    </span>
-    
 
-
-
-	
-    <span class="leancloud_likes" id="/2019/05/04/Sleuth/_likes" data-url="/2019/05/04/Sleuth/" data-title="Spring Cloud Sleuth" rel="unlike">
-        <i class="fa fa-heart"></i>
-        喜欢
-        <i class="leancloud_likes_count" id="leancloud_likes_count">0</i>
-    </span>
 
 					
 
@@ -327,13 +314,64 @@ Spring-Cloud-Sleuth是Spring Cloud的组成部分之一，为SpringCloud应用�
 -->
 
 
+	
 
-	<script>
-		var appid = 'dX--',
-            appkey = 'dX--';	  
-        AnnieLeancloud(appid, appkey);         
-	</script>
-    
+				</p>
+			</div>
+		</div>
+		
+		<div class="post" id="post">
+			<a class="post-cover" href="2019/05/04/Sleuth/" title=" Spring Cloud Sleuth ">
+				
+				<img class="lazy" src="/img/placeholder.jpg" data-src="/img/0.jpg">
+			</a>
+
+			<div class="post-text">
+				<p class="post-time">
+					五月 4日, 2019
+				</p>	
+				<h3 class="post-title" id="post-title-index">
+					<a href="2019/05/04/Sleuth/" title="Spring Cloud Sleuth">
+						<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+						
+	<a href="2019/05/04/Sleuth/" itemprop="url">
+		Spring Cloud Sleuth
+	</a>
+
+					</a>
+				</h3>
+				<p class="post-content">
+					
+						概述
+Spring-Cloud-Sleuth是Spring Cloud的组成部分之一，为SpringCloud应用实现了一种分布式追踪解决方案，其兼容了Z...
+					
+				</p>
+				<p class="post-meta">
+					
+
+
+
+					
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
 
 	
 
@@ -424,7 +462,7 @@ Spring-Cloud-Sleuth是Spring Cloud的组成部分之一，为SpringCloud应用�
 		
 	<!-- set '1' to show motto in all pages! -->
 
-	<script src="/plugin/motto/motto.js"></script>
+	<script src="plugin/motto/motto.js"></script>
 	
 	<script type="text/javascript">
 		$(".motto").html( getMingYanContent() );
@@ -456,31 +494,14 @@ Spring-Cloud-Sleuth是Spring Cloud的组成部分之一，为SpringCloud应用�
 		<div class="local-search-footer">
 			<div class="topN-post">				
 				
-
-   
-	<div id="topN">
-		<div class="topN-title" data-title="热门文章"></div> 
-	</div>
-	
-    <script>
-        var appid = 'dX--',
-            appkey = 'dX--',
-            limitCount = 10;
-        if( $('#topN').length ){
-            AV.initialize(appid, appkey);
-            var Counter = AV.Object.extend("Counter");  
-            topNPost(Counter, limitCount);
-        }
-    </script>
-   
 								
 			</div>
 		</div>
 	</div>
 </div>
 
-<script src="/plugin/search/ziploader.js"></script>
-<script src="/plugin/search/search.js"></script>
+<script src="plugin/search/ziploader.js"></script>
+<script src="plugin/search/search.js"></script>
 
 <script type="text/javascript">
 	var search_path = 'search.json',
@@ -523,12 +544,12 @@ Spring-Cloud-Sleuth是Spring Cloud的组成部分之一，为SpringCloud应用�
 	
  
 
-<script src="/plugin/vibrant/vibrant.js"></script>
-<script src="/plugin/chinese/chinese.js"></script>
-<script src="/plugin/imgLazyLoader/yall.min.js"></script>
-<script src="/plugin/imgResize/jquery.resizeimagetoparent.min.js"></script>
-<script src="/plugin/nicescroll/jquery.nicescroll.js"></script>
-<script src="/js/resizediv.js"></script>
-<script src="/js/main.js"></script>
+<script src="plugin/vibrant/vibrant.js"></script>
+<script src="plugin/chinese/chinese.js"></script>
+<script src="plugin/imgLazyLoader/yall.min.js"></script>
+<script src="plugin/imgResize/jquery.resizeimagetoparent.min.js"></script>
+<script src="plugin/nicescroll/jquery.nicescroll.js"></script>
+<script src="js/resizediv.js"></script>
+<script src="js/main.js"></script>
 	</body>	
 </html>
