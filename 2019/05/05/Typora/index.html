@@ -311,7 +311,7 @@
 
 	<a href itemprop="url">
 		<time datetime="2019-05-05T07:56:58.000Z" itemprop="dateUpdated">
-	  		2019-05-05
+	  		2019-05-13
 	  </time>
 	</a> 
 
@@ -343,6 +343,19 @@
 		<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><blockquote>
 <p>在使用Hexo搭建GitHub博客的时候，上传图片是个头疼的问题，经过研究，用Typora可以很好的解决这个问题，编写博客也变得非常的方便了</p>
 </blockquote>
+<h2 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a>Typora</h2><blockquote>
+<p>typora 是一个免费的Markdown可视化编写工具，个人认为非常的好用，推荐大家使用</p>
+</blockquote>
+<p><a href="https://www.typora.io" title="typora官网" target="_blank" rel="noopener">下载地址</a></p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li><p>修改项目配置文件_config.yml中的熟悉<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. 在```scaffolds/post.md``` 文件中增加```typora-copy-images-to: &#123;&#123; title &#125;&#125;``` ,目的是告诉typora将图片统一复制到一个目录下面</span><br><span class="line"></span><br><span class="line">   ```yaml</span><br><span class="line">   ---</span><br><span class="line">   title: &#123;&#123; title &#125;&#125;</span><br><span class="line">   date: &#123;&#123; date &#125;&#125;</span><br><span class="line">   tags:</span><br><span class="line">   categories:</span><br><span class="line">   typora-copy-images-to: &#123;&#123; title &#125;&#125;</span><br><span class="line">   ---</span><br></pre></td></tr></table></figure></p>
+</li>
+<li><p>设置typora，是typora默认使用相对路径，这样我们在编写markdown的时候才可以正确的预览到图片</p>
+<p><img src="/2019/05/05/Typora/image-20190513101004593.png" alt="image-20190513101004593"></p>
+</li>
+<li><p>我在使用的过程中，有个小问题：必须要创建2篇以上的文章才能正确的上传图片，可能和主题有关系。如果你也遇到这个问题，不妨再创建一篇文章试一下</p>
+</li>
+</ol>
 	
 	</div>
 	
