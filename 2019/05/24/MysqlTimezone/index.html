@@ -13,7 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <title>
     
-      test | nbullet_blog
+      MyBatis的时区问题 | nbullet_blog
     
   </title>
   <meta name="author" content="nbullet">
@@ -160,7 +160,7 @@
 	<!-- Page title -->
 	<p>
 		
-			当前文章&nbsp;:&nbsp;《test》
+			当前文章&nbsp;:&nbsp;《MyBatis的时区问题》
 		
 	</p>
 
@@ -258,6 +258,18 @@
 		插件作者：KELEN
 		插件来源: https://github.com/KELEN/katelog
 -->
+
+	
+		<div class="layout-toc">
+			<div id="layout-toc">
+				<div class="k-catelog-list" id="catelog-list" data-title="文章目录"></div>
+			</div>
+		</div>
+
+		
+		<script src="../../../../plugin/toc/katelog.min.js"></script>
+
+		
 	 
 
 <div class="layout-post">
@@ -266,7 +278,7 @@
 		<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
 		
 	<a href itemprop="url">
-		test
+		MyBatis的时区问题
 	</a>
 
 	</div>
@@ -280,8 +292,8 @@
 	发布于
 
 	<a href itemprop="url">
-		<time datetime="2019-05-05T07:18:02.000Z" itemprop="datePublished">
-	  		2019-05-05
+		<time datetime="2019-05-24T12:26:01.000Z" itemprop="datePublished">
+	  		2019-05-24
 	  </time>
 	</a>
 	&nbsp;
@@ -298,8 +310,8 @@
 	更新于
 
 	<a href itemprop="url">
-		<time datetime="2019-05-05T07:18:02.000Z" itemprop="dateUpdated">
-	  		2019-05-05
+		<time datetime="2019-05-24T12:26:01.000Z" itemprop="dateUpdated">
+	  		2019-05-27
 	  </time>
 	</a> 
 
@@ -308,7 +320,21 @@
 		</span>
 		<span>
 			<i class="fa fa-tags"></i>
-					
+			
+	
+		<a href="../../../../tags/技巧/" class=" ">
+			技巧
+		</a>
+	
+		<a href="../../../../tags/mysql/" class=" ">
+			mysql
+		</a>
+	
+		<a href="../../../../tags/jdbc/" class=" ">
+			jdbc
+		</a>
+	
+		
 		</span>
 		
 		
@@ -318,11 +344,38 @@
 	</div>
 
 	<div class="article-content" id="article-content">
-		<p><img src="/2019/05/05/test/image-20190505151856604.png" alt="image-20190505151856604"></p>
-	
+		<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><blockquote>
+<p>在项目中发现date类型的数据，在提交后出现了数据不一致，经过对比，发现大概相差14个小时，第一时间便想到了时区问题</p>
+</blockquote>
+<h2 id="临时解决办法"><a href="#临时解决办法" class="headerlink" title="临时解决办法"></a>临时解决办法</h2><p>在连接url中增加时区设置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```yaml</span><br><span class="line">jdbc-url: jdbc:mysql://mysql.dev.victorplus.cn:3306/boss-credit?characterEncoding=utf8&amp;useSSL=false&amp;allowMultiQueries=true&amp;serverTimezone=CTT</span><br></pre></td></tr></table></figure></p>
+<p>经过设置后，数据查询、保存都不再有问题</p>
+<h2 id="排查问题"><a href="#排查问题" class="headerlink" title="排查问题"></a>排查问题</h2><h3 id="1、检查MySql时区设置是否正确？"><a href="#1、检查MySql时区设置是否正确？" class="headerlink" title="1、检查MySql时区设置是否正确？"></a>1、检查MySql时区设置是否正确？</h3><p>既然是时区的问题，我们首先想到的就是检查MySql设置的时区是否正确：</p>
+<p>通过命令 <code>show variables like ‘%time_zone%’</code> 可以查询到当前的时区是CST</p>
+<p><img src="/2019/05/24/MysqlTimezone/image-20190527145742486.png" alt="image-20190527145742486"></p>
+<h3 id="2、CST时区具体是指什么呢？"><a href="#2、CST时区具体是指什么呢？" class="headerlink" title="2、CST时区具体是指什么呢？"></a>2、CST时区具体是指什么呢？</h3><p><img src="/2019/05/24/MysqlTimezone/image-20190527150043795.png" alt="image-20190527150043795"></p>
+<p>CST居然可以表示多个时区，而美国中部时间和中国标准时间刚好相差14个小时，与我们数据库里面的误差时间刚好相同。</p>
+<p>如果说Mysql中的CST表示的就是中国标准时间，那么Mysql的设置确实没有问题</p>
+<h3 id="3、Mybatis认识CST和Mysql认识的CST不同"><a href="#3、Mybatis认识CST和Mysql认识的CST不同" class="headerlink" title="3、Mybatis认识CST和Mysql认识的CST不同"></a>3、Mybatis认识CST和Mysql认识的CST不同</h3><p>在网上找到已经有人分析过类似的问题，引用一下:<a href="https://blog.csdn.net/yjgithub/article/details/80404002" target="_blank" rel="noopener">https://blog.csdn.net/yjgithub/article/details/80404002</a></p>
+<blockquote>
+<p>现在开始调试mybatis源码，调试到mysql-connector-java-6.0.4.jar包的com.mysql.cj.jdbc.io.JdbcTimestampValueFactory的createFromTimestamp方法时，发现mysql的底层驱动程序对从数据库查询出来的时间用了一个Calender做类型转换，Calender记录中包含的时区为CST，跟中国的时区Asia/Shanghai正好差了14小时。</p>
+<p>那么为什么mybatis连接数据库会使用CST的美国时间呢？继续查看源码发现</p>
+<p>mysql连接数据库的时候会从mysql读取系统的时区设置，调试com.mysql.cj.mysqla.MysqlaSession.java的configureTimezone方法发现，this.getServerVariable(“system_time_zone”)从系统里面读出来的时区设置是CST</p>
+</blockquote>
+<p>从文中我们了解到:</p>
+<ul>
+<li>Mysql中设置的时区来之操作系统</li>
+<li>Mysql中的CST表示中国标准时间</li>
+<li>文中提到的Mybatis的调用实际调用的是jdbc的内容，并且jdbc中的CST表示美国中部时间</li>
+</ul>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>从上面的分析中，我们找到2个解决办法</p>
+<p>1、用jdbc可以识别的定义来重新设置mysql的时区：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set global time_zone = '+08:00'; </span><br><span class="line">Query OK, 0 rows affected (0.00 sec) </span><br><span class="line">mysql&gt; set time_zone = '+08:00'; </span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+<p>2、修改mysql的配置文件，在修改 <code>my.cnf</code> 文件,在 <code>[mysqld]</code> 节下增加 <code>default-time-zone = &#39;+08:00&#39;</code></p>
+<p>3、如上面的临时解决办法，在连接方式中指定时区</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jdbc-url: jdbc:mysql://mysql.dev.victorplus.cn:3306/boss-credit?characterEncoding=utf8&amp;useSSL=false&amp;allowMultiQueries=true&amp;serverTimezone=CTT</span><br></pre></td></tr></table></figure>	
 	</div>
 	
-	<div id="current-post-cover" data-scr="../../../../img/0.jpg"></div>
+	<div id="current-post-cover" data-scr="../../../../photo/94.jpg"></div>
 
 	<!-- relate post, comment...-->
 	<div class="investment-container">
@@ -338,7 +391,7 @@
 		<a href="javascript: window.scrollTo(0, 0);">返回顶部</a>
 		
 		
-			<a href="../../04/Sleuth/" title="Spring Cloud Sleuth" rel="next">
+			<a href="../../05/Typora/" title="Typora+Hexo编写博客" rel="next">
 				下一篇&raquo;
 			</a>
 			
@@ -356,6 +409,33 @@
 <div class="relate-post">
 	
 		<ul>
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="../../05/Typora/" title="Typora+Hexo编写博客">
+								Typora+Hexo编写博客			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								五月 5日, 2019				
+							</p>
+							<p class="relate-post-content">
+								概述
+在使用Hexo搭建GitHub博客的时候，上传图片是个头疼的问题，经过研究，用Typora可以很好的解决这个问题，编写博客也变得非常的方便了
+
+Typora
+typora 是一个免费的Markdown可视化编写工具，个人认为非常...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="../../05/Typora/" title="Typora+Hexo编写博客">				
+								
+								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/0.jpg" alt="Typora+Hexo编写博客">
+							</a>
+						</div>
+					</li>											
+			
 			
 					<li>
 						<div class="relate-post-text">
